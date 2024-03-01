@@ -1,0 +1,8 @@
+.slider {
+  overflow-y: hidden;
+  display: flex;
+  gap: 10px;
+  scroll-snap-type: mandatory;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}

@@ -1,0 +1,120 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background-color: #fff;
+  box-shadow: 1px 1px 10px 0px #e6e6e6;
+  align-items: center;
+  padding: 0.5rem;
+}
+.header .logo {
+  grid-column: span 3;
+}
+.logo a {
+  font-size: 2rem;
+  padding-left: 0.5rem;
+  text-decoration: none;
+  color: var(--main-color);
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.header .search {
+  display: flex;
+  align-items: center;
+  grid-column: 5 / span 6;
+  border: 1px solid #e6e6e6;
+  border-radius: 0.6rem;
+  -webkit-border-radius: 0.6rem;
+  -moz-border-radius: 0.6rem;
+  -ms-border-radius: 0.6rem;
+  -o-border-radius: 0.6rem;
+  overflow: hidden;
+}
+.header .search input {
+  width: 100%;
+  padding: 0.5rem;
+  height: 40px;
+  border: 0;
+  outline: 0;
+}
+.header .search .search-icon {
+  background-color: rgb(0, 86, 210);
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.header .user {
+  grid-column-start: 12;
+  padding-right: 0.5rem;
+  height: 100%;
+  cursor: pointer;
+}
+.header .user .user__image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+/* .header .user .user-icon {
+    background-color: rgb(0, 86, 210);
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    font-size: 1.8rem;
+    color: #fff;
+  } */
+
+.header .user .user-name {
+  color: #000;
+  font-size: 1.3rem;
+}
+.header .user .angle {
+  color: #000;
+  font-size: 15px;
+}
+@media screen and (min-width: 769px) and (max-width: 1043px) {
+  .header .logo a {
+    font-size: 1.3rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .header .logo {
+    grid-column: 1 / span 8 !important;
+    grid-row-start: 1 !important;
+  }
+  .header .search {
+    grid-column: span 12 !important;
+  }
+  .header .user {
+    grid-column: span 4 !important;
+    grid-row-start: 1 !important;
+  }
+}
+@media screen and (max-width: 450px) {
+  .header .logo {
+    grid-column: span 12 !important;
+    text-align: center;
+  }
+  .header .user {
+    grid-column: span 12 !important;
+    grid-row-start: 2 !important;
+  }
+  .header .search {
+    grid-column: span 12 !important;
+  }
+}

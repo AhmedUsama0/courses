@@ -1,0 +1,10 @@
+{
+    "name": "courses/rich-your-mind",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Api\\Models\\": "api/models/",
+            "Config\\": "config/"
+        }
+    }
+}

@@ -1,0 +1,101 @@
+.course {
+  flex: 0 0 33.33%;
+  grid-column: span 3;
+  scroll-snap-align: start;
+  background-color: #fff;
+  box-shadow: 1px 1px 10px 0px #e6e6e6;
+  border-radius: 0.5rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  -ms-border-radius: 0.5rem;
+  -o-border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.course img {
+  width: 100%;
+  height: 300px;
+}
+.course__title {
+  padding: 1rem;
+  max-width: 320px;
+  margin: auto;
+}
+.course__title h3 {
+  font-size: 2rem;
+  text-transform: capitalize;
+  line-height: 3rem;
+  /* text-align: justify;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap; */
+}
+
+
+.course__title .course__info {
+  display: flex;
+  justify-content: space-between;
+  color: gray;
+}
+.course__title .view__course {
+  text-decoration: none;
+  padding: 11px 17px;
+  background-color: var(--main-color);
+  color: #fff;
+  display: block;
+  text-align: center;
+  margin-top: 30px;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+  position: relative;
+}
+.course__title .view__course::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: 0.4s;
+  -webkit-transition: 0.4s;
+  -moz-transition: 0.4s;
+  -ms-transition: 0.4s;
+  -o-transition: 0.4s;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+.course__title .view__course:hover::after {
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .course {
+    grid-column: span 12 !important;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .course {
+    grid-column: span 6;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+    .course {
+      flex: 0 0 50%;
+    }
+  }
+  
+  @media screen and (max-width: 500px ) {
+    .course {
+      flex: 0 0 100%;
+    }
+  }

@@ -1,0 +1,23 @@
+.add-course form,
+.add-episode {
+  background-color: #fff;
+  box-shadow: 1px 1px 10px 0px #e6e6e6;
+  grid-column: 4 / span 6;
+  gap: 70px 0px !important;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  padding: 10px;
+}
+
+@media screen and (max-width: 991px) {
+  .add-course form {
+    grid-column: span 12 !important ;
+  }
+}
+
+.add-course form div:not(:last-child) > input {
+  border: 1px solid #e6e6e6;
+}

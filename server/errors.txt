@@ -1,0 +1,7 @@
+[29-Feb-2024 20:55:47 Europe/Berlin] SQLSTATE[42000]: Syntax error or access violation: 1305 FUNCTION rich_your_mind.SUMs does not exist
+[29-Feb-2024 20:59:50 Europe/Berlin] SQLSTATE[42000]: Syntax error or access violation: 1305 FUNCTION rich_your_mind.SUMs does not exist
+[29-Feb-2024 21:00:24 Europe/Berlin] SQLSTATE[42000]: Syntax error or access violation: 1305 FUNCTION rich_your_mind.SUMs does not exist
+[29-Feb-2024 21:00:27 Europe/Berlin] SQLSTATE[42000]: Syntax error or access violation: 1305 FUNCTION rich_your_mind.SUMs does not exist
+[29-Feb-2024 21:00:38 Europe/Berlin] SQLSTATE[42000]: Syntax error or access violation: 1305 FUNCTION rich_your_mind.SUMs does not exist
+[29-Feb-2024 22:31:10 Europe/Berlin] PHP Warning:  move_uploaded_file(C:\xampp\htdocs\courses\api\models/../uploads/292496835_1062913971304264_8367850239355431515_n.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\courses\api\models\course.php on line 31
+[29-Feb-2024 22:31:10 Europe/Berlin] PHP Warning:  move_uploaded_file(): Unable to move &quot;C:\xampp\tmp\php6B68.tmp&quot; to &quot;C:\xampp\htdocs\courses\api\models/../uploads/292496835_1062913971304264_8367850239355431515_n.jpg&quot; in C:\xampp\htdocs\courses\api\models\course.php on line 31
