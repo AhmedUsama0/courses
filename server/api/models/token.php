@@ -19,7 +19,7 @@ class Token
 
     public static function generateToken($user_id, $role)
     {
-        $exp = time() + (60 * 1);
+        $exp = time() + (60 * 60);
 
         $userData = array(
             "user_id" => $user_id,

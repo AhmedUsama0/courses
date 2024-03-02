@@ -1,4 +1,5 @@
 <?php
+
 namespace Api\Models;
 
 class Episode
@@ -7,6 +8,7 @@ class Episode
     private string  $episode_name;
     private int $course_id;
     private float  $episode_duration;
+    private int $episode_id;
 
     public function __construct(private \PDO $conn)
     {
@@ -28,16 +30,6 @@ class Episode
         }
     }
 
-    private function isEpisodeValid(string $episodeExtension): bool
-    {
-        $allowedExtensions = array("mp4", "mkv");
-        if (!in_array($episodeExtension, $allowedExtensions)) {
-            return false;
-        }
-
-        return true;
-    }
-
     public function setCourseId(int $course_id): void
     {
         $this->course_id = filter_var($course_id, FILTER_SANITIZE_NUMBER_INT);
@@ -49,10 +41,25 @@ class Episode
         $this->episode_name = filter_var($episode_name, FILTER_SANITIZE_STRING);
     }
 
-    public function setEpisodeDuration( float $episode_duration): void
+    public function setEpisodeDuration(float $episode_duration): void
     {
         $this->episode_duration = $episode_duration;
     }
+
+    public function setEpisodeId(int $episode_id): void
+    {
+        $this->episode_id = $episode_id;
+    }
+    private function isEpisodeValid(string $episodeExtension): bool
+    {
+        $allowedExtensions = array("mp4", "mkv");
+        if (!in_array($episodeExtension, $allowedExtensions)) {
+            return false;
+        }
+
+        return true;
+    }
+
 
     public function createEpisode(): void
     {
@@ -99,6 +106,23 @@ class Episode
                 }
             }
             return $episodes;
+        } catch (\PDOException $e) {
+            error_log($e->getMessage());
+            http_response_code(500);
+            echo json_encode(array("serverError" => "internal server error"));
+            exit();
+        }
+    }
+
+    public function deleteEpisode(): void
+    {
+        try {
+            $query  = "DELETE FROM episodes WHERE id = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([
+                $this->episode_id
+            ]);
+            echo json_encode(array("success" => "episode deleted successfully"));
         } catch (\PDOException $e) {
             error_log($e->getMessage());
             http_response_code(500);

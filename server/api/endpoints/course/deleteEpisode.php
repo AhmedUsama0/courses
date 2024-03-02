@@ -1,20 +1,20 @@
 <?php
-header("Access-Control-Allow-Origin:*");
+
+use Api\Models\Episode;
+use Api\Models\Token;
+use Config\Database;
+
+header("Access-Control-Allow-Origin: *");
 header("Content-Type:application/json;charset=utf-8");
-header("Access-Control-Allow-Headers:Authorization");
+header("Access-Control-Allow-Headers: Authorization");
 
 require_once __DIR__ . "/../../../vendor/autoload.php";
 
-use Config\Database;
-use Api\Models\Course;
-use Api\Models\Token;
-
 $headers = apache_request_headers();
 
-if (isset($headers["Authorization"])) {
-    if (substr($headers["Authorization"], 0, 7) === "Bearer ") {
-        $token = substr($headers["Authorization"], 7);
-
+if(isset($headers["Authorization"])) {
+    if(substr($headers["Authorization"],0,7) === "Bearer ") {
+        $token = substr($headers["Authorization"],7);
         Token::setToken($token);
 
         if (!Token::isTokenValid()) {
@@ -25,14 +25,15 @@ if (isset($headers["Authorization"])) {
 
         if (Token::isTokenExpired()) {
             http_response_code(401);
-            echo json_encode(array("authorizedError" => "token is expired. please login again"));
+            echo json_encode(array("authorizedError" => "token is epxired. please login again"));
             exit();
         }
 
         $database = new Database();
         $conn = $database->connect();
 
-        $course = new Course($conn);
-        $course->readCourses();
+        $episode = new Episode($conn);
+        $episode->setEpisodeId($_POST["episode_id"]);
+        $episode->deleteEpisode();
     }
 }
