@@ -1,38 +1,33 @@
 import { useQuery } from "react-query";
-import { useLogout, API_BASE_URL, API_BASE_UPLOADS } from "../../../js";
+import {
+  useLogout,
+  API_BASE_UPLOADS,
+  handleError,
+  useHandleData,
+} from "../../../js";
 import { useNavigate } from "react-router-dom";
 import settings from "./recommendecourses.module.css";
-const RecommendedCourses = ({ userData, onTokenExpired }) => {
+import { useState } from "react";
+const RecommendedCourses = () => {
   const logout = useLogout();
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const fetchRecommendedCourses = async () => {
-    const response = await fetch(
-      `${API_BASE_URL}course/readRecommendedCourses.php`,
-      {
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${userData.token}`,
-        },
-      }
-    );
-    const recommendedCourses = await response.json();
-    if (!response.ok) {
-      const error = new Error(recommendedCourses.error);
-      error.status = response.status;
-      throw error;
-    }
-
-    return recommendedCourses;
-  };
-  const { data: recommendedCourses, error } = useQuery({
+  const handleData = useHandleData();
+  const { data: recommendedCourses } = useQuery({
     queryKey: ["recommendedCourses"],
-    queryFn: fetchRecommendedCourses,
+    queryFn: () =>
+      handleData({
+        method: "GET",
+        endPoint: "course/readRecommendedCourses.php",
+        isAuthenticated: true,
+      }),
     refetchOnWindowFocus: false,
     retry: false,
     staleTime: 20000,
     onError: (error) => {
+      const { errorValue } = handleError(error);
+      setError(errorValue);
       if (error.status === 401) {
-        onTokenExpired(error.message);
         setTimeout(() => {
           logout();
         }, 3000);
@@ -75,9 +70,9 @@ const RecommendedCourses = ({ userData, onTokenExpired }) => {
               </div>
             </div>
           ))}
-        {error && error.status === 404 && (
+        {error && (
           <div className="text-primary alert alert-primary text-capitalize text-center">
-            {error.message}
+            {error}
           </div>
         )}
       </div>

@@ -31,25 +31,13 @@
   white-space: nowrap; */
 }
 
-
 .course__title .course__info {
   display: flex;
   justify-content: space-between;
   color: gray;
 }
 .course__title .view__course {
-  text-decoration: none;
-  padding: 11px 17px;
-  background-color: var(--main-color);
-  color: #fff;
-  display: block;
-  text-align: center;
-  margin-top: 30px;
-  border-radius: 50px;
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  -ms-border-radius: 50px;
-  -o-border-radius: 50px;
+  background-color: var(--main-color) !important;
   position: relative;
 }
 .course__title .view__course::after {
@@ -89,13 +77,13 @@
 }
 
 @media screen and (max-width: 1250px) {
-    .course {
-      flex: 0 0 50%;
-    }
+  .course {
+    flex: 0 0 50%;
   }
-  
-  @media screen and (max-width: 500px ) {
-    .course {
-      flex: 0 0 100%;
-    }
+}
+
+@media screen and (max-width: 500px) {
+  .course {
+    flex: 0 0 100%;
   }
+}

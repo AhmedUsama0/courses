@@ -23,10 +23,7 @@ const Dashboard = () => {
 
           <div className="dashboard pt-2 pb-2 col-12 col-md-7 border-right border d-flex flex-column">
             <MyCourses userData={userData} />
-            <RecommendedCourses
-              userData={userData}
-              onTokenExpired={(error) => setErrorMessage(error)}
-            />
+            <RecommendedCourses />
           </div>
 
           <RightSideBar userData={userData} />

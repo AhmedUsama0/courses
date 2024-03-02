@@ -17,6 +17,10 @@ export { default as ResponseMessage } from "./ResponseMessage";
 
 // CourseCard
 export { default as CourseCard } from "./Settings/CourseCard/CourseCard";
+export {default as DeleteButton} from "./Settings/CourseCard/DeleteButton/DeleteButton";
 
 // AddCourse
 export {default as CourseInput} from "./AddCourse/CourseInput";
+
+// course
+export {default as Episode} from "./Course/Episode";

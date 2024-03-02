@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
-import { useLogout, useHandleData, handleError } from "../js";
+import { useLogout, useHandleData, handleError, API_BASE_UPLOADS } from "../js";
+import { Episode } from "../components";
 import "../css/course.css";
 const Course = () => {
   const [currentEpisode, setCurrentEpisode] = useState("");
@@ -33,11 +34,14 @@ const Course = () => {
       setCurrentEpisode(episodes.data[0]);
     },
     onError: (error) => {
-      const { errorValue, errorObject } = handleError(error);
+      const { errorValue } = handleError(error);
       setError(errorValue);
-      setUserId(errorObject.user_id);
-      setOwnerId(errorObject.owner_id);
-      // if (error.status === 401) setTimeout(() => logout(), 3000);
+      if (error.status === 401) setTimeout(() => logout(), 3000);
+    },
+    onSettled: (episodes, error) => {
+      const { errorObject } = error ? handleError(error) : "";
+      setUserId(episodes?.user_id ?? errorObject?.user_id);
+      setOwnerId(episodes?.owner_id ?? errorObject?.owner_id);
     },
   });
 
@@ -71,17 +75,7 @@ const Course = () => {
     data.append("interaction_type", interaction_type);
     interactionMutation.mutate(data);
   };
-  const handleEpisodeClick = (episode, e) => {
-    // remove focus color from all episode elements
-    Array.from(document.querySelectorAll(".episode")).forEach(
-      (episode) => (episode.style.backgroundColor = "#FFF")
-    );
 
-    // highlight current episode
-    e.target.style.backgroundColor = "#e6e6e6";
-
-    setCurrentEpisode(episode);
-  };
   if (isLoading) {
     return "loading...";
   }
@@ -104,7 +98,7 @@ const Course = () => {
   return (
     <>
       {episodes && (
-        <div className="course-container grid">
+        <div className="course-container grid pt-3">
           {ownerId === userId && userId !== null && ownerId !== null && (
             <Link
               className="blue-button form-control text-decoration-none text-center mb-3 upload"
@@ -118,13 +112,13 @@ const Course = () => {
               {episodes.data &&
                 episodes.data.map((episode, index) => {
                   return (
-                    <li
-                      className="episode"
+                    <Episode
+                      user_id={userId}
+                      owner_id={ownerId}
+                      episode={episode}
                       key={index}
-                      onClick={(e) => handleEpisodeClick(episode, e)}
-                    >
-                      {episode.episode_name}
-                    </li>
+                      onEpisodeClick={(episode) => setCurrentEpisode(episode)}
+                    />
                   );
                 })}
             </ul>
@@ -134,7 +128,7 @@ const Course = () => {
               width="100%"
               height="100%"
               controls
-              src={`http://localhost/courses/uploads/${currentEpisode.episode}`}
+              src={`${API_BASE_UPLOADS}uploads/${currentEpisode.episode}`}
             />
             <div className="grid rounded p-2 info">
               <h3 className="video-title">{currentEpisode.episode_name}</h3>

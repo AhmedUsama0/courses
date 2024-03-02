@@ -1,42 +1,32 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useQuery } from "react-query";
-import { CourseCard } from "../../../components";
-import { useLogout, API_BASE_URL } from "../../../js";
+import { CourseCard, DeleteButton } from "../../../components";
+import { useLogout, useHandleData, handleError } from "../../../js";
 import settings from "./mycourses.module.css";
 const MyCourses = ({ userData }) => {
   const logout = useLogout();
+  const [error, setError] = useState(null);
   const slider = useRef(null);
-
+  const handleData = useHandleData();
   const decodedToken = atob(userData.token);
   const user_id = JSON.parse(
     decodedToken.slice(0, decodedToken.length - 5)
   ).user_id;
 
-  const fetchMyCourses = async () => {
-    const response = await fetch(`${API_BASE_URL}course/readMyCourses.php`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${userData.token}`,
-      },
-    });
-    const data = await response.json();
-
-    if (!response.ok) {
-      const error = new Error(data.error);
-      error.status = response.status;
-      throw error;
-    }
-
-    return data;
-  };
-  const { data: courses, error } = useQuery({
+  const { data: courses } = useQuery({
     queryKey: ["myCourses", user_id],
-    queryFn: fetchMyCourses,
+    queryFn: () =>
+      handleData({
+        method: "GET",
+        endPoint: "course/readMyCourses.php",
+        isAuthenticated: true,
+      }),
     staleTime: 20000,
     refetchOnWindowFocus: false,
     retry: false,
     onError: (error) => {
+      const { errorValue } = handleError(error);
+      setError(errorValue);
       if (error.status === 401) {
         setTimeout(() => {
           logout();
@@ -83,12 +73,14 @@ const MyCourses = ({ userData }) => {
         <div className={settings.slider} ref={slider}>
           {courses &&
             courses.map((course, index) => (
-              <CourseCard course={course} key={index} />
+              <CourseCard course={course} key={index}>
+                <DeleteButton course_id={course.id} />
+              </CourseCard>
             ))}
         </div>
-        {error && error.status === 404 && (
+        {error && (
           <div className="text-primary alert alert-primary text-center text-capitalize">
-            {error.message}
+            {error}
           </div>
         )}
       </div>

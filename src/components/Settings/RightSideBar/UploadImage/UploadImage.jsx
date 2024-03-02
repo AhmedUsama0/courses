@@ -2,7 +2,11 @@ import { useMutation } from "react-query";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateImage } from "../../../../store/store";
-import { API_BASE_UPLOADS, API_BASE_URL } from "../../../../js";
+import {
+  API_BASE_UPLOADS,
+  handleError,
+  useHandleData,
+} from "../../../../js";
 import settings from "../UploadImage/uploadimage.module.css";
 
 const UploadImage = ({ userData }) => {
@@ -10,6 +14,7 @@ const UploadImage = ({ userData }) => {
   const [uploadResponse, setUploadResponse] = useState(null);
   const imageFile = useRef(null);
   const dispatch = useDispatch();
+  const handleData = useHandleData();
 
   const handleImageChange = (e) => {
     e.preventDefault();
@@ -19,26 +24,14 @@ const UploadImage = ({ userData }) => {
       imageFile.current.value = null;
     }
   };
-  const uploadImage = async (user_image) => {
-    const response = await fetch(`${API_BASE_URL}user/changeImage.php`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${userData.token}`,
-        accept: "application/json",
-      },
-      body: user_image,
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      const error = new Error(data.error);
-      error.status = response.status;
-      throw error;
-    }
-
-    return data;
-  };
   const mutation = useMutation({
-    mutationFn: uploadImage,
+    mutationFn: (userImage) =>
+      handleData({
+        method: "POST",
+        endPoint: "user/changeImage.php",
+        data: userImage,
+        isAuthenticated: true,
+      }),
     onMutate: () => {
       setIsLoading(true);
     },
@@ -47,7 +40,8 @@ const UploadImage = ({ userData }) => {
       dispatch(updateImage(data.image));
     },
     onError: (error) => {
-      setUploadResponse(error.message);
+      const { errorValue } = handleError(error);
+      setUploadResponse(errorValue);
     },
     onSettled: () => {
       setIsLoading(false);
@@ -82,11 +76,7 @@ const UploadImage = ({ userData }) => {
         </div>
       )}
 
-      <form
-        className={settings.upload__image}
-        onSubmit={onUploadImage}
-        encType="multipart/form-data"
-      >
+      <form className={settings.upload__image} encType="multipart/form-data">
         <label htmlFor="image" className={settings.camera__container}>
           <i className={`fa-solid fa-camera ${settings.camera}`}></i>
         </label>

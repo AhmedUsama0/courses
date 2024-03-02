@@ -4,6 +4,7 @@
   background-repeat: no-repeat;
   background-position: -600px 60%;
   height: 100vh;
+  overflow-y: hidden;
 }
 .input__error {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e") !important;
@@ -33,17 +34,6 @@
   margin-top: 20px;
   color: gray;
 }
-/* .container form div {
-  margin-bottom: 30px;
-} */
-/* .container form label,
-.container form input {
-  display: block;
-} */
-/* .container form label {
-  margin-bottom: 10px;
-  color: gray;
-} */
 .container form input:not(input[type="radio"]) {
   width: 100%;
   outline: 0;
@@ -73,4 +63,17 @@
 .login a {
   text-decoration: none;
   color: var(--main-color);
+}
+
+@media screen and (max-width: 991px) {
+  .background .container {
+    max-width: unset;
+    width: 100%;
+    margin: unset;
+  }
+}
+@media screen and (max-width: 500px) {
+  .background .container {
+    padding: 1rem;
+  }
 }
